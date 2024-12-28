@@ -1,0 +1,60 @@
+.app-header {
+    background: #e91e63;
+    color: white;
+
+    .dark {
+        background-color: #36118a;
+
+        .active {
+            color: #e91e63;
+        }
+    }
+}
+
+// .app-header.dark {
+//     background-color: #36118a;
+
+//     .active {
+//         color: #e91e63;
+//     }
+// }
+
+.app-header section.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.app-header h1.logo {
+    font-weight: 600;
+}
+
+.user-info {
+    /* background-color: $clr2; */
+    padding: 2px 8px;
+    padding-left: 100px;
+    color: white;
+
+    .score {
+        background-color: lightgreen;
+        color: green;
+        padding: 8px;
+        margin: 10px;
+        border-radius: 50%;
+    }
+
+    img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.user-info .btn-link {
+    color: green;
+}
+
+.app-header nav a:not(:last-child) {
+    margin-right: 10px;
+}
