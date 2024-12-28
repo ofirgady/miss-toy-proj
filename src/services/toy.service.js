@@ -13,8 +13,6 @@ export const toyService = {
 
 const STORAGE_KEY = 'toys'
 
-_createToys()
-
 async function query(filterBy = {}) {
     try {
         
@@ -22,26 +20,26 @@ async function query(filterBy = {}) {
 
         if (filterBy.txt) {
 			const regExp = new RegExp(filterBy.txt, "i");
-			toys = toys.filter((todo) => regExp.test(todo.txt));
+			toys = toys.filter((toy) => regExp.test(toy.txt));
 		}
 
-		if (filterBy.label.length) {
-			toys = toys.filter((todo) => todo.importance >= filterBy.importance);
-		}
+		// if (filterBy.labels) {
+		// 	toys = toys.filter((toy) => toy.importance >= filterBy.importance);
+		// }
 
 		if (filterBy.inStock !== '' && filterBy.inStock !== undefined) {
-			toys = toys.filter((todo) => todo.inStock === filterBy.inStock);
+			toys = toys.filter((toy) => toy.inStock === filterBy.inStock);
 		}
 
-		 if (filterBy.sortBy) {
-            const { field, order } = filterBy.sortBy;
-			if (field === 'created') {
-				toys = toys.sort((a, b) => (a[field] < b[field] ? 1 : -1));
-			}
-			else {
-				toys = toys.sort((a, b) => (a[field] > b[field] ? 1 : -1));
-			}
-        }
+		//  if (filterBy.sortBy) {
+        //     const { field, order } = filterBy.sortBy;
+		// 	if (field === 'created') {
+		// 		toys = toys.sort((a, b) => (a[field] < b[field] ? 1 : -1));
+		// 	}
+		// 	else {
+		// 		toys = toys.sort((a, b) => (a[field] > b[field] ? 1 : -1));
+		// 	}
+        // }
 
         // if (filterBy.pagination) {
         //     const { currentPage, itemsPerPage } = filterBy.pagination;
@@ -74,20 +72,16 @@ function save(toy) {
 }
 
 function createToy(name = '', price = 100, labels = [], createdAt = Date.now(), inStock = true ) {
-    return {
-        name,
-        price,
-        labels,
-        createdAt, 
-        inStock
-    }
+    const toy = {name, price, labels, createdAt, inStock}
+    toy._id = utilService.makeId();
+    return toy
 }
 
 function getDefaultFilter() {
     return {
         name: '',
-        label: [],
-        inStock: '',
+        // labels: [],
+        inStock: true,
     }
 }
 
@@ -107,7 +101,7 @@ function _createToys() {
         toys = []
         for (let i = 0 ; i < 5 ; i++) {
             let toy = createToy("Talking Doll", 123, ["Doll", "Battery Powered", "Baby"])
-            toys.push(toy);
+            toys.push(toy)
         }
         utilService.saveToStorage(STORAGE_KEY, toys)
     }

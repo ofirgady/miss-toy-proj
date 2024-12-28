@@ -1,9 +1,10 @@
 import { combineReducers, compose, legacy_createStore as createStore } from "redux"
 import { userReducer } from "./reducers/user.reducer"
+import { toyReducer } from "./reducers/toy.reducer"
 // const { createStore, compose, combineReducers } = Redux
 
 const rootReducer = combineReducers({
-    // carModule: carReducer,
+    toyModule: toyReducer,
     userModule: userReducer,
 })
 
