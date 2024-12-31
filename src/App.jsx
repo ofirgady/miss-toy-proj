@@ -26,9 +26,8 @@ function App() {
                             <Route element={<HomePage />} path="/" />
                             <Route element={<AboutUs />} path="/about" />
                             <Route element={<ToyIndex />} path="/toy" />
-                            <Route element={<ToyEdit />} path="/toy/edit/:toyId?" />
                             <Route element={<ToyDetails />} path="/toy/:toyId" />
-                            {/* <Route element={<UserDetails />} path="/user/:userId" /> */}
+                            <Route element={<ToyEdit />} path="/toy/edit/:toyId?" />
                         </Routes>
                     </main>
                     <AppFooter />

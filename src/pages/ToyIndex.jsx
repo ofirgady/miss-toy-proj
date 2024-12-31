@@ -1,11 +1,14 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link, useSearchParams } from "react-router-dom"
-import { loadToys, removeToyOptimistic, setFilterBy } from "../store/actions/toy.actions"
-import { showErrorMsg } from "../services/event-bus.service"
-import { Fragment, useEffect, useRef, useState } from "react"
-import { updateUser } from "../store/actions/user.actions"
-import { ToyFilter } from "../cmps/ToyFilter"
-import { ToyList } from "../cmps/ToyList"
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useSearchParams } from 'react-router-dom'
+import { loadLabels, loadToys, removeToyOptimistic, setFilterBy } from '../store/actions/toy.actions'
+import { showErrorMsg } from '../services/event-bus.service'
+import { Fragment, useEffect, useRef, useState } from 'react'
+import { updateUser } from '../store/actions/user.actions'
+import { ToyFilter } from '../cmps/ToyFilter'
+import { ToyList } from '../cmps/ToyList'
+import { SET_FILTER_BY } from '../store/reducers/toy.reducer'
+import { toyService } from '../services/toy.service'
+import { getExistingProperties } from '../services/util.service'
 
 export function ToyIndex() {
 
@@ -13,17 +16,31 @@ export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+	const labels = useSelector((storeState) => storeState.toyModule.labels)
     const [searchParams, setSearchParams] = useSearchParams()
     const [toyToRemove, setToyToRemove] = useState(null)
     const dialogRef = useRef(null)
+	
+
+	useEffect(() => {
+        setFilterBy(toyService.getFilterFromSearchParams(searchParams))
+    }, [])
+
 
     useEffect(() => {
 		loadToys(filterBy).catch((err) => {
-			showErrorMsg("Cannot load toys")
+			showErrorMsg('Cannot load toys')
 		})
+		setSearchParams(getExistingProperties(filterBy))
 	}, [filterBy])
-    
-    
+	
+	useEffect(() => {
+        if (!labels.length) {
+            loadLabels()
+                .catch(() => showErrorMsg('Cannot load labels'));
+        }
+    }, [labels]);
+        
     function onSetFilter(filterBy) {
         setFilterBy(filterBy)
     }
@@ -57,11 +74,11 @@ export function ToyIndex() {
 	// 	dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy })
 	// }
 
-	// function onSortChange(field) {
-	// 	const newOrder = filterBy.sortBy.order === "asc" ? "desc" : "asc"
-	// 	const updatedFilterBy = { ...filterBy, sortBy: { field, order: newOrder } }
-	// 	dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy })
-	// }
+	function onSortChange(field) {
+		const newOrder = filterBy.sortBy.order === 'asc' ? 'desc' : 'asc'
+		const updatedFilterBy = { ...filterBy, sortBy: { field, order: newOrder } }
+		dispatch({ type: SET_FILTER_BY, filterBy: updatedFilterBy })
+	}
 
 	function handleConfirmRemove() {
 		if (toyToRemove) {
@@ -69,10 +86,9 @@ export function ToyIndex() {
 				.then(() => {
 					handleCloseDialog()
 					showSuccessMsg(`Toy removed`)
-					console.log(user)
 				})
 				.catch((err) => {
-					showErrorMsg("Cannot remove toy " + toyToRemove)
+					showErrorMsg('Cannot remove toy ' + toyToRemove)
 				})
 		}
 	}
@@ -82,6 +98,7 @@ export function ToyIndex() {
 			<ToyFilter
 				filterBy={filterBy}
 				onSetFilterBy={onSetFilter}
+				labels={labels.map((label) => ({ label, value: label }))}
 			/>
 			<div>
 				<Link
@@ -94,18 +111,20 @@ export function ToyIndex() {
 			{!isLoading ? (
 				<>
 					<div className='sorting-controls'>
-						<button onClick={() => onSortChange("importance")}>
-							Sort by Importance
+						<button onClick={() => onSortChange('price')}>
+							Sort by Price
 						</button>
-						<button onClick={() => onSortChange("createdAt")}>
-							Sort by Date
+						<button onClick={() => onSortChange('createdAt')}>
+							Sort by time of creation
 						</button>
-						<button onClick={() => onSortChange("txt")}>Sort by Text</button>
+						<button onClick={() => onSortChange('name')}>
+							Sort by Name
+						</button>
 					</div>
-					{/* <ToyList
+					<ToyList
 						toys={toys}
 						onRemoveToy={handleOpenDialog}
-					/> */}
+					/>
 				</>
 			) : (
 				<div className='loading-container'>

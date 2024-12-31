@@ -1,4 +1,4 @@
-import {toyService} from '../../services/toy.service'
+import { toyService } from "../../services/toy.service"
 
 export const SET_TOYS = "SET_TOYS"
 export const SET_TOTAL_TOYS = "SET_TOTAL_TOYS"
@@ -9,6 +9,7 @@ export const UPDATE_TOY = "UPDATE_TOY"
 export const SET_FILTER_BY = "SET_FILTER_BY"
 export const SET_IS_LOADING = "SET_IS_LOADING"
 export const UNDO_TOYS = "UNDO_TOYS"
+export const SET_LABELS = "SET_LABELS"
 
 const initialState = {
 	toys: [],
@@ -16,7 +17,8 @@ const initialState = {
 	filterBy: toyService.getDefaultFilter(),
 	isLoading: false,
 	lastToys: [],
-	toy: null, // TODO check to change to null
+	toy: toyService.getDefaultToy(), // TODO check to change to null
+	labels: [], // New field to store the labels
 }
 
 export function toyReducer(state = initialState, cmd = {}) {
@@ -68,6 +70,11 @@ export function toyReducer(state = initialState, cmd = {}) {
 			return {
 				...state,
 				toys: [...state.lastToys],
+			}
+		case SET_LABELS:
+			return {
+				...state,
+				labels: cmd.labels,
 			}
 		default:
 			return state
