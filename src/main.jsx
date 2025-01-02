@@ -8,9 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <BrowserRouter basename='/miss-toy-proj/'>
     <Provider store={store}>
         <App />
     </Provider>
-    </BrowserRouter>
 )
