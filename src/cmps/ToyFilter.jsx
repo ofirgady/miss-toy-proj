@@ -46,7 +46,7 @@ export function ToyFilter({ filterBy, onSetFilterBy, labels }) {
 		}
 	}
 
-	const { name, labels: selectedLabels = [], inStock } = filterByToEdit
+	const { name, selectedLabels = [], inStock } = filterByToEdit
 
 	return (
 		<section className='toy-filter'>

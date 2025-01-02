@@ -4,6 +4,7 @@ import { loadLabels, loadToy, saveToy } from "../store/actions/toy.actions.js"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Select from "react-select"
+import { toyService } from "../services/toy.service.js"
 
 export function ToyEdit() {
 	const toy = useSelector((storeState) => storeState.toyModule.toy)
@@ -25,16 +26,9 @@ export function ToyEdit() {
 				})
 		} else {
 			// Initialize a new toy if no toyId is present
-			setToyToEdit({
-				name: "",
-				price: 0,
-				inStock: false,
-				toyLabels: [],
-				color: "#ffffff",
-				description: "",
-			})
+			setToyToEdit(toyService.getDefaultToy())
 		}
-	}, [params.toyId])
+	}, [])
 
 	useEffect(() => {
 		if (!labels.length) {
@@ -51,15 +45,14 @@ export function ToyEdit() {
 	}, [labels])
 
 	useEffect(() => {
-		if (toy) {
-			// Update toyToEdit when toy is loaded
-			setToyToEdit((prevToy) => ({
-				...prevToy,
-				...toy,
-				toyLabels: toy.labels || [], // Ensure toyLabels is an array
-			}))
-		}
-	}, [toy])
+        if (toy) {
+            setToyToEdit((prevToy) => ({
+                ...prevToy,
+                ...toy,
+                toyLabels: toy.labels || [],
+            }));
+        }
+    }, [toy, params.toyId]);
 
 	function handleChange(eventOrOptions, isMultiSelect = false) {
 		if (isMultiSelect) {
@@ -145,14 +138,14 @@ export function ToyEdit() {
 					id='inStock'
 				/>
 
-				<label htmlFor='color'>Color:</label>
+				{/* <label htmlFor='color'>Color:</label>
 				<input
 					onChange={handleChange}
 					value={color}
 					type='color'
 					name='color'
 					id='color'
-				/>
+				/> */}
 
 				<label htmlFor='description'>Description:</label>
 				<textarea

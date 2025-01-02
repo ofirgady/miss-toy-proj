@@ -101,9 +101,7 @@ export function ToyIndex() {
 				labels={labels.map((label) => ({ label, value: label }))}
 			/>
 			<div>
-				<Link
-					to='/toy/edit'
-					className='btn'>
+				<Link to='/toy/edit'>
 					Add Toy
 				</Link>
 			</div>

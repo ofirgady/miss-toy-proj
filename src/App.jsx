@@ -10,8 +10,6 @@ import { ToyDetails } from './pages/ToyDetails.jsx'
 import { AppHeader } from './cmps/AppHeader.jsx'
 import { AppFooter } from './cmps/AppFooter.jsx'
 
-import './assets/style/css/styles.css'
-
 
 function App() {
   const [count, setCount] = useState(0)

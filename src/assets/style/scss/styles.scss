@@ -4,11 +4,14 @@
 @use "./base/layout.scss";
 
 /* Pages */
-
+@use "./pages/_toy-index.scss";
+@use "./pages/_toy-edit.scss";
 
 /* Components */
 @use "./cmps/_app-header.scss";
 @use "./cmps/_loading.scss";
+@use "./cmps/_toy-preview.scss";
+@use "./cmps/_toy-list.scss";
 
 
 
