@@ -1,0 +1,50 @@
+// Colors
+$color-primary: #3498db;
+$color-secondary: #2ecc71;
+$color-danger: #e74c3c;
+$color-header-bg: #34495e;
+$color-header-text: #ecf0f1;
+
+$color-footer-bg: #2c3e50;
+$color-footer-text: #ecf0f1;
+$footer-bg-color: #2c3e50; // Replace with the desired color if different
+$footer-text-color: #ecf0f1; // For text inside the footer
+
+$color-form-bg: #f7f9fa;
+$color-input-border: #bdc3c7;
+$color-text-muted: #7f8c8d;
+$color-card-bg: #ffffff;
+$color-dialog-bg: #ffffff;
+$color-active-link: #9b59b6;
+
+// Font Sizes
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 20px;
+
+// Font Weights
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Spacing
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+
+// Box Shadows
+$box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+// Responsive Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// Global Heights
+$header-height: 60px;
+$footer-height: 40px;

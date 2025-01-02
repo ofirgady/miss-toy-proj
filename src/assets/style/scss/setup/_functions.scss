@@ -1,0 +1,16 @@
+/* setup/_functions.scss */
+
+/* Convert px to rem */
+@function px-to-rem($px, $base: 16px) {
+    @return $px / $base * 1rem;
+  }
+  
+  /* Darken a color */
+  @function darken-color($color, $amount: 10%) {
+    @return darken($color, $amount);
+  }
+  
+  /* Lighten a color */
+  @function lighten-color($color, $amount: 10%) {
+    @return lighten($color, $amount);
+  }

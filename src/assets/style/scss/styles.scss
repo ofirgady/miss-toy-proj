@@ -1,32 +1,27 @@
-/*  Basics */
-@use "./base/base.scss";
-@use "./base/helpers.scss";
-@use "./base/layout.scss";
 
-/* Pages */
-@use "./pages/_toy-index.scss";
-@use "./pages/_toy-edit.scss";
+/* Setup */
+@import './setup/variables';
+@import './setup/mixins';
+@import './setup/functions';
+@import './setup/typography';
+
+/* Basics */
+@import './base/base';
+@import './base/helpers';
+@import './base/layout';
 
 /* Components */
-@use "./cmps/_app-header.scss";
-@use "./cmps/_loading.scss";
-@use "./cmps/_toy-preview.scss";
-@use "./cmps/_toy-list.scss";
+@import './cmps/app-header';
+@import './cmps/toy-preview';
+@import './cmps/loading';
+@import './cmps/login-signup';
+@import './cmps/app-footer';
+@import './cmps/toy-list';
 
+/* Pages */
+@import './pages/toy-details';
+@import './pages/home-page';
+// @import './pages/about';
+@import './pages/toy-edit';
+@import './pages/toy-index';
 
-
-
-// .loading-container {
-//     height: 100px;
-//     font-weight: bolder;
-//     font-size: 40px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     z-index: 100;
-// }
-
-// .loading-container img {
-//     height: 100%;
-//     z-index: 100;
-// }

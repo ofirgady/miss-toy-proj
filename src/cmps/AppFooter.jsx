@@ -1,7 +1,7 @@
 export function AppFooter() {
     return (
-        <section>
-         
-        </section>
+         <footer className="footer">
+        <p>Miss Toy © 2024 | Built with ♥ by Ofir Gady</p>
+        </footer>
     )
 }

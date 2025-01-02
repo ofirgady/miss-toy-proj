@@ -1,0 +1,56 @@
+.toy-details {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	padding: 20px;
+	text-align: center;
+
+	h1 {
+		font-size: 2rem;
+		color: #34495e;
+		margin-bottom: 10px;
+	}
+
+	h2 {
+		font-size: 1.5rem;
+		color: #27ae60; /* Green for "In Stock" */
+		&:not(:empty):not(.in-stock) {
+			color: #e74c3c; /* Red for "Not in Stock" */
+		}
+	}
+
+	h3,
+	h4 {
+		font-size: 1.2rem;
+		color: #7f8c8d;
+	}
+
+	img {
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		max-width: 200px;
+		margin: 10px 0;
+	}
+
+	p {
+		font-size: 1rem;
+		color: #2c3e50;
+		line-height: 1.6;
+	}
+
+	button {
+		background-color: #3498db;
+		color: #fff;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 4px;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: background-color 0.3s;
+
+		&:hover {
+			background-color: #2980b9;
+		}
+	}
+}

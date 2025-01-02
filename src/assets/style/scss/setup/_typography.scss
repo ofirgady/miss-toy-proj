@@ -1,0 +1,10 @@
+
+/* Import custom fonts */
+@font-face {
+    font-family: 'Bahnschrift';
+    src: url('../fonts/Bahnschrift/bahnschrift.ttf') format('truetype');
+  }
+  
+  /* General font stack variables */
+  $font-primary: 'Bahnschrift', sans-serif;
+  $font-secondary: 'Roboto', sans-serif;

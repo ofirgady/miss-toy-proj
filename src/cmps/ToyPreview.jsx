@@ -1,9 +1,10 @@
 export function ToyPreview({ toy }) {
-	return (
-		<article className='toy-preview'>
-			<h2> Toy: {toy.name} </h2>
-			<h4>Toy price: {toy.price}</h4>
-			<img src={toy.img} alt={toy.name} />
-		</article>
-	)
+    return (
+        <div className="toy-preview">
+            <img src={toy.img || '/default-toy-image.png'} alt={toy.name} />
+            <h3>{toy.name}</h3>
+            <p>Price: ${toy.price}</p>
+            <p>{toy.inStock ? 'In Stock' : 'Out of Stock'}</p>
+        </div>
+    );
 }
