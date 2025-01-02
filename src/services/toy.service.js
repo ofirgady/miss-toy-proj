@@ -26,6 +26,14 @@ const predefinedLabels = [
 	"Battery Powered",
 ]
 
+const toyImgUrls = [
+    'https://res.cloudinary.com/ofirgady/image/upload/v1735812739/miss_toys/ppsl76k0bt2o1gi7ldmf.png',
+    'https://res.cloudinary.com/ofirgady/image/upload/v1735812739/miss_toys/wkowqdngnyniaegg79hg.png',
+    'https://res.cloudinary.com/ofirgady/image/upload/v1735812738/miss_toys/wvxaqmfdwlljegnqi1on.png',
+    'https://res.cloudinary.com/ofirgady/image/upload/v1735812739/miss_toys/wfj5xup3wusq9i2s9tqb.png',
+    'https://res.cloudinary.com/ofirgady/image/upload/v1735812739/miss_toys/byftcerhcdpqc5bcymg3.png'
+]
+
 _createToys()
 
 async function query(filterBy = {}) {
@@ -71,11 +79,12 @@ function save(toy) {
 }
 
 function createToy(
-	name = "Toy",
+	{name = "Toy",
 	price = 100,
 	labels = ["Generic"],
 	createdAt = Date.now(),
-	inStock = true
+	inStock = true,
+    img = ''}
 ) {
 	return {
 		_id: utilService.makeId(),
@@ -84,6 +93,7 @@ function createToy(
 		labels,
 		createdAt,
 		inStock,
+        img
 	}
 }
 
@@ -109,11 +119,13 @@ function _createToys() {
 	let toys = utilService.loadFromStorage(STORAGE_KEY)
 	if (!toys || !toys.length) {
 		toys = []
-		const toyNames = ["Talking Doll", "Action Figure", "Puzzle Game"]
+		const toyNames = ["Robot", "Race Car", "Dinosaur", 'rubber duck', 'Building Blocks']
 		for (let i = 0; i < 5; i++) {
 			const name = toyNames[i % toyNames.length]
+            const img = toyImgUrls[i];
+            const price = 10 + i * 10
 			const randomLabels = _getRandomLabels()
-			let toy = createToy(name, 10 + i * 10, randomLabels)
+			let toy = createToy({name, price, labels: randomLabels, img: img})
 			toys.push(toy)
 		}
 		utilService.saveToStorage(STORAGE_KEY, toys)
@@ -128,12 +140,11 @@ function getDefaultToy() {
 		labels: ["Generic"],
 		createdAt: Date.now(),
 		inStock: true,
-		color: "#ffffff",
+        img:''
 	}
 }
 
 function getLabels() {
-	// Only return predefined static labels
 	return Promise.resolve(predefinedLabels)
 }
 

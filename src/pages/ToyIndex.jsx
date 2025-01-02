@@ -28,6 +28,7 @@ export function ToyIndex() {
 
 	useEffect(() => {
 		onLoadToys()
+		// console.log(toys);
 		setSearchParams(getExistingProperties(filterBy))
 	}, [filterBy])
 

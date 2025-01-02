@@ -42,7 +42,6 @@ export function AppHeader() {
 					</nav>
 				</section>
 			</section>
-			<UserMsg />
 		</header>
 	)
 }

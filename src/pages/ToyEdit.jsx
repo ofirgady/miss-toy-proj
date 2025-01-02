@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
-import Select from "react-select"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
-import { toyService } from "../services/toy.service"
-import { loadToy, saveToy } from "../store/actions/toy.actions"
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import Select from 'react-select'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { toyService } from '../services/toy.service'
+import { loadToy, saveToy } from '../store/actions/toy.actions'
+import { ImgUploader } from '../cmps/ImgUploader'
 
 export function ToyEdit() {
 	// Fetching toy and isLoading from the store
@@ -27,11 +28,11 @@ export function ToyEdit() {
 		try {
 			if (params.toyId) {
 				await loadToy(params.toyId)
-				showSuccessMsg("Toy loaded successfully")
+				showSuccessMsg('Toy loaded successfully')
 			}
 		} catch (error) {
-			showErrorMsg("Cannot load toy")
-			navigate("/toy")
+			showErrorMsg('Cannot load toy')
+			navigate('/toy')
 		}
 	}
 
@@ -45,7 +46,7 @@ export function ToyEdit() {
 			const labels = await toyService.getLabels()
 			setLabelOptions(labels.map((label) => ({ label, value: label })))
 		} catch (error) {
-			showErrorMsg("Cannot load labels")
+			showErrorMsg('Cannot load labels')
 		}
 	}
 
@@ -55,7 +56,7 @@ export function ToyEdit() {
 			setToyToEdit((prevToy) => ({
 				...prevToy,
 				...toy,
-				toyLabels: toy.labels || [],
+				labels: toy.labels || [],
 			}))
 		}
 	}, [toy])
@@ -66,10 +67,10 @@ export function ToyEdit() {
 		let value = target.value
 
 		switch (target.type) {
-			case "number":
-				value = +value || ""
+			case 'number':
+				value = +value || ''
 				break
-			case "checkbox":
+			case 'checkbox':
 				value = target.checked
 				break
 			default:
@@ -85,15 +86,20 @@ export function ToyEdit() {
 		setToyToEdit((prevToy) => ({ ...prevToy, labels: selectedLabels }))
 	}
 
+	// Handle image upload
+	function onImageUploaded(imgUrl) {
+		setToyToEdit((prevToy) => ({ ...prevToy, img: imgUrl }))
+	}
+
 	// Save the toy
 	async function onSaveToy(ev) {
 		try {
 			ev.preventDefault()
-			const savedToy = await saveToy(toyToEdit)
-			navigate("/toy")
-			showSuccessMsg(`Toy Saved (id: ${savedToy._id})`)
+			await saveToy(toyToEdit)
+			navigate('/toy')
+			showSuccessMsg('Toy Saved Successfully')
 		} catch (error) {
-			showErrorMsg("Cannot save toy")
+			showErrorMsg('Cannot save toy')
 		}
 	}
 
@@ -106,7 +112,7 @@ export function ToyEdit() {
 		)
 
 	// Destructure toyToEdit properties for form inputs
-	const { name, price, inStock, labels, description } = toyToEdit
+	const { name, price, inStock, labels, description, img } = toyToEdit
 
 	return (
 		<section className='toy-edit'>
@@ -154,6 +160,14 @@ export function ToyEdit() {
 					onChange={handleMultiSelectChange}
 					placeholder='Select labels'
 				/>
+
+				<label htmlFor='img'>Image:</label>
+				<div className='img-preview'>
+					{img && (
+						<img src={img} alt={toy.name} style={{ maxWidth: '150px' }} />
+					)}
+					<ImgUploader onUploaded={onImageUploaded} />
+				</div>
 
 				<button type='submit'>Save</button>
 			</form>

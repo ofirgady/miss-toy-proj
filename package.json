@@ -12,6 +12,7 @@
     "sass-prod": "sass --no-source-map --update --style=compressed scss:css"
   },
   "dependencies": {
+    "cloudinary": "^2.5.1",
     "downshift": "^9.0.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
