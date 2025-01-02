@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { store } from './store/store.js'
-import { Provider } from 'react-redux'
 import { HomePage } from './pages/HomePage.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
 import { ToyIndex } from './pages/ToyIndex.jsx'
@@ -13,7 +11,6 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 
 function App() {
 	return (
-		<Provider store={store}>
 			<Router>
 				<section className='app'>
 					<AppHeader />
@@ -30,7 +27,6 @@ function App() {
 					<UserMsg />
 				</section>
 			</Router>
-		</Provider>
 	)
 }
 
