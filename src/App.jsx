@@ -12,8 +12,6 @@ import { AppFooter } from './cmps/AppFooter.jsx'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <Provider store={store}>
             <Router>

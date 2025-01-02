@@ -10,8 +10,7 @@ export const toyService = {
 	getDefaultFilter,
 	getDefaultToy,
 	getFilterFromSearchParams,
-	getDynamicLabels,
-	getStaticLabels,
+	getLabels, // Fetches predefined static labels
 }
 
 const STORAGE_KEY = "toysDB"
@@ -48,24 +47,9 @@ async function query(filterBy = {}) {
 			toys = toys.filter((toy) => toy.inStock === filterBy.inStock)
 		}
 
-		if (filterBy.sortBy) {
-			const { field } = filterBy.sortBy
-			if (field === "createdAt") {
-				toys = toys.sort((a, b) => (a[field] < b[field] ? 1 : -1))
-			} else {
-				toys = toys.sort((a, b) => (a[field] > b[field] ? 1 : -1))
-			}
-		}
-
-		// if (filterBy.pagination) {
-		//     const { currentPage, itemsPerPage } = filterBy.pagination;
-		//     const startIdx = (currentPage - 1) * itemsPerPage;
-		//     toys = toys.slice(startIdx, startIdx + itemsPerPage);
-		// }
-
 		return { toys, totalToys }
 	} catch (error) {
-		console.log("error:", error)
+		console.error("Error querying toys:", error)
 		throw error
 	}
 }
@@ -108,7 +92,6 @@ function getDefaultFilter() {
 		name: "",
 		labels: [],
 		inStock: "",
-		// pagination: {currentPage: 1, itemsPerPage: 5},
 		sortBy: { field: "createdAt", order: "asc" },
 	}
 }
@@ -139,48 +122,23 @@ function _createToys() {
 
 function getDefaultToy() {
 	return {
-		_id: "", // Empty string for new toys
+		_id: "",
 		name: "New Toy",
 		price: 100,
 		labels: ["Generic"],
 		createdAt: Date.now(),
 		inStock: true,
-		color: "#ffffff", // Default color
+		color: "#ffffff",
 	}
 }
 
-function getDynamicLabels() {
-	return storageService.query(STORAGE_KEY).then((toys) => {
-		const labelsSet = new Set()
-		toys.forEach((toy) => toy.labels.forEach((label) => labelsSet.add(label)))
-		return Array.from(labelsSet)
-	})
-}
-
-function getStaticLabels() {
-	return Promise.resolve([
-		"On wheels",
-		"Box game",
-		"Art",
-		"Baby",
-		"Doll",
-		"Puzzle",
-		"Outdoor",
-		"Battery Powered",
-	])
+function getLabels() {
+	// Only return predefined static labels
+	return Promise.resolve(predefinedLabels)
 }
 
 function _getRandomLabels() {
-	const labelCount = Math.floor(Math.random() * 3) + 1 // Random count between 1 and 3
-	const shuffled = [...predefinedLabels].sort(() => 0.5 - Math.random()) // Shuffle labels
-	return shuffled.slice(0, labelCount) // Return a random subset
+	const labelCount = Math.floor(Math.random() * 3) + 1
+	const shuffled = [...predefinedLabels].sort(() => 0.5 - Math.random())
+	return shuffled.slice(0, labelCount)
 }
-
-// const toy = {
-// 	_id: "t101",
-// 	name: "Talking Doll",
-// 	price: 123,
-// 	labels: ["Doll", "Battery Powered", "Baby"],
-// 	createdAt: 1631031801011,
-// 	inStock: true,
-// }

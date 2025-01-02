@@ -9,7 +9,6 @@ export const UPDATE_TOY = "UPDATE_TOY"
 export const SET_FILTER_BY = "SET_FILTER_BY"
 export const SET_IS_LOADING = "SET_IS_LOADING"
 export const UNDO_TOYS = "UNDO_TOYS"
-export const SET_LABELS = "SET_LABELS"
 
 const initialState = {
 	toys: [],
@@ -17,64 +16,58 @@ const initialState = {
 	filterBy: toyService.getDefaultFilter(),
 	isLoading: false,
 	lastToys: [],
-	toy: toyService.getDefaultToy(), // TODO check to change to null
-	labels: [], // New field to store the labels
+	toy: toyService.getDefaultToy(), // Default toy for editing
 }
 
-export function toyReducer(state = initialState, cmd = {}) {
-	switch (cmd.type) {
+export function toyReducer(state = initialState, action = {}) {
+	switch (action.type) {
 		case SET_TOYS:
 			return {
 				...state,
-				toys: cmd.toys,
+				toys: action.toys,
 			}
 		case SET_TOTAL_TOYS:
 			return {
 				...state,
-				totalToys: cmd.totalToys,
+				totalToys: action.totalToys,
 			}
 		case SET_TOY:
 			return {
 				...state,
-				toy: cmd.toy,
+				toy: action.toy,
 			}
 		case ADD_TOY:
 			return {
 				...state,
-				toys: [...state.toys, cmd.toy],
+				toys: [...state.toys, action.toy],
 			}
 		case REMOVE_TOY:
 			return {
 				...state,
-				toys: state.toys.filter((toy) => toy._id !== cmd.toyId),
+				toys: state.toys.filter((toy) => toy._id !== action.toyId),
 				lastToys: [...state.toys],
 			}
 		case UPDATE_TOY:
 			return {
 				...state,
 				toys: state.toys.map((toy) =>
-					toy._id === cmd.toy._id ? cmd.toy : toy
+					toy._id === action.toy._id ? action.toy : toy
 				),
 			}
 		case SET_FILTER_BY:
 			return {
 				...state,
-				filterBy: { ...state.filterBy, ...cmd.filterBy },
+				filterBy: { ...state.filterBy, ...action.filterBy },
 			}
 		case SET_IS_LOADING:
 			return {
 				...state,
-				isLoading: cmd.isLoading,
+				isLoading: action.isLoading,
 			}
 		case UNDO_TOYS:
 			return {
 				...state,
 				toys: [...state.lastToys],
-			}
-		case SET_LABELS:
-			return {
-				...state,
-				labels: cmd.labels,
 			}
 		default:
 			return state

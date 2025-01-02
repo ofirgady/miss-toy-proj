@@ -3,64 +3,55 @@ import { SET_IS_LOADING } from "../reducers/toy.reducer.js";
 import { SET_USER } from "../reducers/user.reducer.js";
 import { store } from "../store.js";
 
-
-export function login(credentials) {
-    return userService.login(credentials)
-        .then(user => {
-            store.dispatch({ type: SET_USER, user })
-        })
-        .catch(err => {
-            console.log('user actions -> Cannot login', err)
-            throw err
-        })
+export async function login(credentials) {
+    try {
+        const user = await userService.login(credentials)
+        store.dispatch({ type: SET_USER, user })
+    } catch (err) {
+        console.error('user actions -> Cannot login', err)
+        throw err
+    }
 }
 
-export function signup(credentials) {
-    return userService.signup(credentials)
-        .then(user => {
-            store.dispatch({ type: SET_USER, user })
-        })
-        .catch(err => {
-            console.log('user actions -> Cannot signup', err)
-            throw err
-        })
+export async function signup(credentials) {
+    try {
+        const user = await userService.signup(credentials)
+        store.dispatch({ type: SET_USER, user })
+    } catch (err) {
+        console.error('user actions -> Cannot signup', err)
+        throw err
+    }
 }
 
-
-export function logout() {
-    return userService.logout()
-        .then(() => {
-            store.dispatch({ type: SET_USER, user: null })
-        })
-        .catch((err) => {
-            console.log('user actions -> Cannot logout', err)
-            throw err
-        })
+export async function logout() {
+    try {
+        await userService.logout()
+        store.dispatch({ type: SET_USER, user: null })
+    } catch (err) {
+        console.error('user actions -> Cannot logout', err)
+        throw err
+    }
 }
 
-export function updateUserPrefs(user) {
+export async function updateUserPrefs(user) {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
-    return userService.updateLoggedInUser(user)
-    .then((updatedUser) => {
+    try {
+        const updatedUser = await userService.updateLoggedInUser(user)
         store.dispatch({ type: SET_USER, user: updatedUser })
-    })
-    .catch((err) => {
-        console.log('user actions -> Cannot update user preferences', err)
+    } catch (err) {
+        console.error('user actions -> Cannot update user preferences', err)
         throw err
-    })
-    .finally(() => {
+    } finally {
         store.dispatch({ type: SET_IS_LOADING, isLoading: false })
-    })
+    }
 }
 
-export function updateUser(user) {
-    return userService.updateLoggedInUser(user)
-    .then((updatedUser) => {
+export async function updateUser(user) {
+    try {
+        const updatedUser = await userService.updateLoggedInUser(user)
         store.dispatch({ type: SET_USER, user: updatedUser })
-    })
-    .catch((err) => {
-        console.log('user actions -> Cannot update user', err)
+    } catch (err) {
+        console.error('user actions -> Cannot update user', err)
         throw err
-    })
+    }
 }
-
